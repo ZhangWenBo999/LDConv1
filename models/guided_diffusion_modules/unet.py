@@ -189,8 +189,8 @@ class ResBlock(EmbedBlock):
             # )
             self.skip_connection = LDConv_DynamicSampling(inc=channels,outc=self.out_channel,num_param=3)
         else:
-            # self.skip_connection = nn.Conv2d(channels, self.out_channel, 1)
-            self.skip_connection = LDConv_DynamicSampling(inc=channels,outc=self.out_channel,num_param=3)
+            self.skip_connection = nn.Conv2d(channels, self.out_channel, 1)
+            # self.skip_connection = LDConv_DynamicSampling(inc=channels,outc=self.out_channel,num_param=3)
 
     def forward(self, x, emb):
         """
