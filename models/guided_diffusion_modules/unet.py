@@ -417,8 +417,8 @@ class UNet(nn.Module):
 
         ch = input_ch = int(channel_mults[0] * inner_channel)
         self.input_blocks = nn.ModuleList(
-            # [EmbedSequential(nn.Conv2d(in_channel, ch, 3, padding=1))]
-            [EmbedSequential(LDConv_DynamicSampling(inc=in_channel,outc=ch,num_param=3))]
+            [EmbedSequential(nn.Conv2d(in_channel, ch, 3, padding=1))]
+            # [EmbedSequential(LDConv_DynamicSampling(inc=in_channel,outc=ch,num_param=3))]
         )
         self._feature_size = ch
         input_block_chans = [ch]
