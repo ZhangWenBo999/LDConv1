@@ -176,8 +176,8 @@ class ResBlock(EmbedBlock):
             SiLU(),
             nn.Dropout(p=dropout),
             zero_module(
-                # nn.Conv2d(self.out_channel, self.out_channel, 3, padding=1)
-                LDConv_DynamicSampling(inc=self.out_channel,outc=self.out_channel,num_param=3)
+                nn.Conv2d(self.out_channel, self.out_channel, 3, padding=1)
+                # LDConv_DynamicSampling(inc=self.out_channel,outc=self.out_channel,num_param=3)
             ),
         )
 
