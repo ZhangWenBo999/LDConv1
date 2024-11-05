@@ -62,7 +62,7 @@ class LDConv_DynamicSampling(nn.Module):
             nn.init.constant_(self.p_conv.weight, 0)
 
         # 生成偏移
-        offset = self.p_conv(x.cpu())
+        offset = self.p_conv()
         dtype = offset.data.type()
         N = offset.size(1) // 2
 
