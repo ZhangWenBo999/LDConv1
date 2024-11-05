@@ -48,10 +48,10 @@ class LDConv_DynamicSampling(nn.Module):
 
         # 偏移卷积层，用于生成采样位置的偏移
         self.p_conv = nn.Conv2d(inc, 2 * num_param, kernel_size=3, padding=1, stride=stride)
-        nn.init.constant_(self.p_conv.weight, 0)
+        # nn.init.constant_(self.p_conv.weight, 0)
 
     def forward(self, x):
-        # x = x.cpu()
+        x = x.cpu()
         print('x.device:',x.device)
         print('self.p_conv(x).device:',self.p_conv(x).device)
         # 生成自适应采样密度
@@ -62,7 +62,7 @@ class LDConv_DynamicSampling(nn.Module):
         if adaptive_num_param != self.num_param:
             self.num_param = adaptive_num_param
             self.p_conv = nn.Conv2d(x.size(1), 2 * self.num_param, kernel_size=3, padding=1, stride=self.stride)
-            nn.init.constant_(self.p_conv.weight, 0)
+            # nn.init.constant_(self.p_conv.weight, 0)
 
         # 生成偏移
         offset = self.p_conv(x)
