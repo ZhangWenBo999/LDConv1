@@ -149,8 +149,8 @@ class ResBlock(EmbedBlock):
         self.in_layers = nn.Sequential(
             normalization(channels),
             SiLU(),
-            # nn.Conv2d(channels, self.out_channel, 3, padding=1),
-            LDConv_DynamicSampling(inc=channels,outc=self.out_channel,num_param=3)
+            nn.Conv2d(channels, self.out_channel, 3, padding=1),
+            # LDConv_DynamicSampling(inc=channels,outc=self.out_channel,num_param=3)
         )
 
         self.updown = up or down
