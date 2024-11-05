@@ -51,7 +51,7 @@ class LDConv_DynamicSampling(nn.Module):
         # nn.init.constant_(self.p_conv.weight, 0)
 
     def forward(self, x):
-        x = x.cpu()
+        # x = x.cpu()
         print('x.device:',x.device)
         print('self.p_conv(x).device:',self.p_conv(x).device)
         # 生成自适应采样密度
