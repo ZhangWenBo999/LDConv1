@@ -223,6 +223,8 @@ class ResBlock(EmbedBlock):
         else:
             h = h + emb_out
             h = self.out_layers(h)
+        print('self.skip_connection(x).shape:', self.skip_connection(x).shape)
+        print('h.shape:', h.shape)
         return self.skip_connection(x) + h
 
 class AttentionBlock(nn.Module):
