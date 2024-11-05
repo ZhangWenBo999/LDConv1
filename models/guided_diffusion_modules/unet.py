@@ -74,7 +74,7 @@ class Upsample(nn.Module):
         self.use_conv = use_conv
         if use_conv:
             # self.conv = nn.Conv2d(self.channels, self.out_channel, 3, padding=1)
-            self.conv = LDConv_DynamicSampling(inc=self.channels,outc=self.out_channel,num_param=3).cuda()
+            self.conv = LDConv_DynamicSampling(inc=self.channels,outc=self.out_channel,num_param=3)
 
     def forward(self, x):
         assert x.shape[1] == self.channels
@@ -100,7 +100,7 @@ class Downsample(nn.Module):
             # self.op = nn.Conv2d(
             #     self.channels, self.out_channel, 3, stride=stride, padding=1
             # )
-            self.op = LDConv_DynamicSampling(inc=self.channels,outc=self.out_channel,num_param=3).cuda()
+            self.op = LDConv_DynamicSampling(inc=self.channels,outc=self.out_channel,num_param=3)
         else:
             assert self.channels == self.out_channel
             self.op = nn.AvgPool2d(kernel_size=stride, stride=stride)
@@ -150,7 +150,7 @@ class ResBlock(EmbedBlock):
             normalization(channels),
             SiLU(),
             # nn.Conv2d(channels, self.out_channel, 3, padding=1),
-            LDConv_DynamicSampling(inc=channels,outc=self.out_channel,num_param=3).cuda()
+            LDConv_DynamicSampling(inc=channels,outc=self.out_channel,num_param=3)
         )
 
         self.updown = up or down
@@ -177,7 +177,7 @@ class ResBlock(EmbedBlock):
             nn.Dropout(p=dropout),
             zero_module(
                 # nn.Conv2d(self.out_channel, self.out_channel, 3, padding=1)
-                LDConv_DynamicSampling(inc=self.out_channel,outc=self.out_channel,num_param=3).cuda()
+                LDConv_DynamicSampling(inc=self.out_channel,outc=self.out_channel,num_param=3)
             ),
         )
 
@@ -187,10 +187,10 @@ class ResBlock(EmbedBlock):
             # self.skip_connection = nn.Conv2d(
             #     channels, self.out_channel, 3, padding=1
             # )
-            self.skip_connection = LDConv_DynamicSampling(inc=channels,outc=self.out_channel,num_param=3).cuda()
+            self.skip_connection = LDConv_DynamicSampling(inc=channels,outc=self.out_channel,num_param=3)
         else:
             # self.skip_connection = nn.Conv2d(channels, self.out_channel, 1)
-            self.skip_connection = LDConv_DynamicSampling(inc=channels,outc=self.out_channel,num_param=3).cuda()
+            self.skip_connection = LDConv_DynamicSampling(inc=channels,outc=self.out_channel,num_param=3)
 
     def forward(self, x, emb):
         """
@@ -416,7 +416,7 @@ class UNet(nn.Module):
         ch = input_ch = int(channel_mults[0] * inner_channel)
         self.input_blocks = nn.ModuleList(
             # [EmbedSequential(nn.Conv2d(in_channel, ch, 3, padding=1))]
-            [EmbedSequential(LDConv_DynamicSampling(inc=in_channel,outc=ch,num_param=3).cuda())]
+            [EmbedSequential(LDConv_DynamicSampling(inc=in_channel,outc=ch,num_param=3))]
         )
         self._feature_size = ch
         input_block_chans = [ch]
@@ -547,7 +547,7 @@ class UNet(nn.Module):
             normalization(ch),
             SiLU(),
             # zero_module(nn.Conv2d(input_ch, out_channel, 3, padding=1)),
-            zero_module(LDConv_DynamicSampling(inc=input_ch,outc=out_channel,num_param=3).cuda()),
+            zero_module(LDConv_DynamicSampling(inc=input_ch,outc=out_channel,num_param=3)),
         )
 
     def forward(self, x, gammas):
