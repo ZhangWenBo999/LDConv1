@@ -52,6 +52,8 @@ class LDConv_DynamicSampling(nn.Module):
 
     def forward(self, x):
         # x = x.cpu()
+        print('x.device:',x.device)
+        print('self.p_conv().device:',self.p_conv().device)
         # 生成自适应采样密度
         density = self.attention(x)
         adaptive_num_param = max(1, int(self.num_param * density.mean().item()))
